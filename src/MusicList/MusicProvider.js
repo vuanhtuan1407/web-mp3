@@ -1,5 +1,5 @@
 import React from "react";
-import "./MusicProvider.css";
+import "../css/MusicList.css";
 
 function MusicProvider({ children }) {
   return <div className="music-provider">{children}</div>;

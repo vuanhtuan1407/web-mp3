@@ -1,0 +1,25 @@
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-previous,
+.btn-next {
+  padding: 7px;
+  border-radius: 100%;
+  width: 20px;
+}
+
+.btn-next:hover,
+.btn-previous:hover,
+.btn-play-pause:hover {
+  background-color: aqua;
+}
+
+.btn-play-pause{
+  margin: 32px;
+  padding: 5px 5px 1px;
+  width: 40px;
+  border-radius: 100%;
+}

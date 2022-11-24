@@ -1,8 +1,7 @@
 import React, { useRef, useState } from "react";
 import PlayProvider from "./PlayProvider";
-import "./PlayContent.css";
+import "../css/PlayContent.css";
 import { list } from "../MusicList/List.js";
-
 
 function PlayContent() {
   const audio = useRef();
@@ -59,5 +58,5 @@ function PlayContent() {
     </PlayProvider>
   );
 }
- 
+
 export default PlayContent;

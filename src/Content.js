@@ -1,35 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRef, useState } from "react";
 import Provider from "./Provider";
 import MusicProvider from "./MusicList/MusicProvider";
 import PlayProvider from "./PlayContent/PlayProvider";
 import { list } from "./MusicList/List.js";
-import "./PlayContent/PlayContent.css";
-import "./MusicList/MusicProvider.css";
+import PrevIcon from "./icons/PrevIcon";
+import NextIcon from "./icons/NextIcon";
+import PauseIcon from "./icons/PauseIcon";
+import PlayIcon from "./icons/PlayIcon";
+import PauseButton from "./icons/PauseButton";
+import "./css/MusicList.css";
+import "./css/PlayContent.css";
+import "./css/styles.css";
 
 function Content() {
   const audio = useRef();
   const [index, setIndex] = useState(0);
-  const [player, setPlayer] = useState(list[index]);
-  const [isPlay, setIsPlay] = useState(true);
+  const [player, setPlayer] = useState(list[0]);
+  const [isPlay, setIsPlay] = useState(false);
+
+  const loadedData = () => {
+    if (isPlay) audio.current.play();
+  };
 
   const handlePlayer = () => {
     if (isPlay) {
-      player.pause();
+      audio.current.pause();
     } else {
-      player.play();
+      audio.current.play();
     }
     setIsPlay(!isPlay);
-  };
-
-  const handleNext = () => {
-    if (index === list.length) {
-      setIndex(0);
-      setPlayer(list[0]);
-    } else {
-      setIndex((prevIndex) => prevIndex + 1);
-      setPlayer(list[index]);
-    }
   };
 
   return (
@@ -46,14 +46,30 @@ function Content() {
 
         <div className="controls">
           <div className="btn-repeat"></div>
-          <div className="btn-previous"></div>
-          <div className="btn-play" onClick={handlePlayer}></div>
-          <div className="btn-next">
-            <button onClick={handleNext}>next</button>
+          <div
+            className="btn-previous"
+            onClick={() => {
+              setIndex(index - 1);
+              setPlayer(list[index]);
+            }}
+          >
+            {<PrevIcon />}
+          </div>
+          <div className="btn-play-pause" onClick={handlePlayer}>
+            {isPlay ? <PauseButton /> : <PlayIcon />}
+          </div>
+          <div
+            className="btn-next"
+            onClick={() => {
+              setIndex(index + 1);
+              setPlayer(list[index]);
+            }}
+          >
+            {<NextIcon />}
           </div>
           <div className="btn-random"></div>
         </div>
-        <audio src={player.url} controls />
+        <audio ref={audio} src={player.url} onLoadedData={loadedData} />
       </PlayProvider>
       <MusicProvider>
         {list.map((music) => (
