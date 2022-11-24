@@ -20,6 +20,14 @@
   cursor: pointer;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
+.music-title {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.music-title div:nth-child(1){
+  font-weight: 600;
+}
 
 .music .music-img {
   width: 40px;
