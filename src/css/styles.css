@@ -8,7 +8,7 @@
 .btn-next {
   padding: 7px;
   border-radius: 100%;
-  width: 20px;
+  width: 30px;
 }
 
 .btn-next:hover,
@@ -17,9 +17,28 @@
   background-color: aqua;
 }
 
-.btn-play-pause{
-  margin: 32px;
+.btn-play-pause {
+  margin: 0px 32px;
   padding: 5px 5px 1px;
-  width: 40px;
+  width: 50px;
   border-radius: 100%;
+}
+
+.btn-repeat {
+  margin: 32px;
+  padding: 1px 5px;
+  width: 25px;
+  border-radius: 100%;
+}
+
+.btn-random {
+  margin: 32px;
+  padding: 1px 7px;
+  width: 30px;
+  border-radius: 100%;
+}
+
+.btn-repeat:active,
+.btn-random:active {
+  background-color: aqua;
 }

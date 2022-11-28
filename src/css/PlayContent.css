@@ -1,9 +1,9 @@
 .song-thumbnail {
-    width: 220px;
-    height: 220px;
-    border-radius: 100%;
-    object-fit: cover;
-    animation: rotate 6s linear infinite;
+  width: 220px;
+  height: 220px;
+  border-radius: 100%;
+  object-fit: cover;
+  animation: rotate 6s linear infinite;
 }
 
 @keyframes rotate {
@@ -14,3 +14,21 @@
     transform: rotate(360deg);
   }
 }
+
+/* .time-slider div:nth-child(1) {
+  background-color: #e3e3e3;
+  height: 2px;
+}
+
+.time-slider div:nth-child(2) {
+  background-color: #333;
+  height: "2px";
+}
+
+.time-slider div:nth-child(3) {
+  margin-top: "-3px";
+  width: "8px";
+  height: "8px";
+  background-color: #333;
+  border-radius: 0;
+} */
