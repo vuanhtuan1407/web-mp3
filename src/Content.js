@@ -19,12 +19,21 @@ import "./css/PlayProvider.css";
 
 function Content() {
   const audio = useRef();
-  const [index, setIndex] = useState(0);
-  const [player, setPlayer] = useState(list[0]);
+  const [index, setIndex] = useState(() => {
+    const storageIndex = JSON.parse(localStorage.getItem("index"));
+
+    return storageIndex || 0;
+  });
+  const [player, setPlayer] = useState(list[index]);
   const [isPlay, setIsPlay] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(1);
+  const [maxVolume, setMaxVolume] = useState(1);
 
   const loadedData = () => {
+    setDuration(audio.current.duration);
+    setMaxVolume(audio.current.maxVolume);
     if (isPlay) audio.current.play();
   };
 
@@ -63,7 +72,21 @@ function Content() {
     setCurrentTime(x);
   };
 
+  const handleVolume = ({ x }) => {
+    audio.current.volume = Math.floor(x)/x;
+    setVolume(x);
+  };
+
   useEffect(() => {
+    setIndex((prevIndex) => {
+      const saveIndex = prevIndex;
+
+      const jsonIndex = JSON.stringify(saveIndex);
+      localStorage.setItem("index", jsonIndex);
+      console.log(jsonIndex);
+
+      return saveIndex;
+    });
     setPlayer(list[index]);
   }, [index]);
 
@@ -93,10 +116,19 @@ function Content() {
           <div className="btn-random" onClick={randomAudio}>
             {<RandomIcon />}
           </div>
+          <div className="slider-volume">
+            <TimeSlider
+              axis="x"
+              xmax={maxVolume}
+              x={volume}
+              onChange={handleVolume}
+            />
+          </div>
         </div>
         <TimeSlider
           className="time-slider"
           axis="x"
+          xmax={duration}
           x={currentTime}
           onChange={handleTimeSlider}
           styles={{
@@ -124,7 +156,18 @@ function Content() {
           <div
             key={music.id}
             className="music"
-            onClick={() => setIndex((prevIndex) => (prevIndex = music.id))}
+            onClick={() => {
+              setIndex(() => {
+                const saveIndex = music.id;
+
+                const jsonIndex = JSON.stringify(saveIndex);
+                localStorage.setItem("index", jsonIndex);
+                console.log(jsonIndex);
+
+                return saveIndex;
+              });
+              setPlayer(list[index]);
+            }}
           >
             <img className="music-img" src={music.image} />
             <div className="music-title">
@@ -138,6 +181,7 @@ function Content() {
         ref={audio}
         src={player.url}
         onTimeUpdate={() => setCurrentTime(audio.current.currentTime)}
+        onVolumeChange={() => setVolume(audio.current.volume)}
         onLoadedData={loadedData}
       />
     </Provider>
