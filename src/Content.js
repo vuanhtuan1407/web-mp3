@@ -12,6 +12,7 @@ import PlayIcon from "./icons/PlayIcon";
 import PauseButton from "./icons/PauseButton";
 import RepeatIcon from "./icons/RepeatIcon";
 import RandomIcon from "./icons/RandomIcon";
+import SpeakerIcon from "./icons/SpeakerIcon";
 import "./css/MusicList.css";
 import "./css/PlayContent.css";
 import "./css/styles.css";
@@ -29,11 +30,10 @@ function Content() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
-  const [maxVolume, setMaxVolume] = useState(1);
+  const maxVolume = 1;
 
   const loadedData = () => {
     setDuration(audio.current.duration);
-    setMaxVolume(audio.current.maxVolume);
     if (isPlay) audio.current.play();
   };
 
@@ -73,7 +73,8 @@ function Content() {
   };
 
   const handleVolume = ({ x }) => {
-    audio.current.volume = Math.floor(x)/x;
+    audio.current.volume = x;
+    console.log(audio.current.volume);
     setVolume(x);
   };
 
@@ -103,7 +104,10 @@ function Content() {
         </div>
 
         <div className="controls">
-          <div className="btn-repeat">{<RepeatIcon />}</div>
+          {/* <div className="btn-repeat">{<RepeatIcon />}</div> */}
+          <div className="btn-random" onClick={randomAudio}>
+            {<RandomIcon />}
+          </div>
           <div className="btn-previous" onClick={handlePrev}>
             {<PrevIcon />}
           </div>
@@ -113,16 +117,20 @@ function Content() {
           <div className="btn-next" onClick={handleNext}>
             {<NextIcon />}
           </div>
-          <div className="btn-random" onClick={randomAudio}>
-            {<RandomIcon />}
-          </div>
-          <div className="slider-volume">
-            <TimeSlider
-              axis="x"
-              xmax={maxVolume}
-              x={volume}
-              onChange={handleVolume}
-            />
+
+          <div className="btn-volume">
+            <div className="icon">
+              <SpeakerIcon />
+              <div className="volume-slider">
+                <TimeSlider
+                  axis="x"
+                  xmax={maxVolume}
+                  xstep="0.001"
+                  x={volume}
+                  onChange={handleVolume}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <TimeSlider

@@ -2,6 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  left: 15%;
 }
 
 .btn-previous,
@@ -41,4 +43,28 @@
 .btn-repeat:active,
 .btn-random:active {
   background-color: aqua;
+}
+
+.btn-volume {
+  display: flex;
+  padding: 7px;
+  width: 500px;
+  align-items: center;
+}
+
+.btn-volume .icon {
+  display: flex;
+  align-items: center;
+  width: 30px;
+  padding: 12px;
+}
+
+.icon .volume-slider{
+  display: none;
+  position: absolute;
+}
+
+.btn-volume .icon:hover .volume-slider {
+  display: block;
+  padding: 50px;
 }
