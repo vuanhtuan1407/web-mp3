@@ -20,6 +20,7 @@ import "./css/PlayProvider.css";
 
 function Content() {
   const audio = useRef();
+  const musicRef = useRef();
   const [index, setIndex] = useState(() => {
     const storageIndex = JSON.parse(localStorage.getItem("index"));
 
@@ -29,6 +30,11 @@ function Content() {
   const [isPlay, setIsPlay] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [timeDuration, setTimeDuration] = useState(0);
+
+  const [currentMinute, setCurrentMinute] = useState(0);
+  const [currentSecond, setCurrentSecond] = useState(0);
+
   const [volume, setVolume] = useState(1);
   const maxVolume = 1;
 
@@ -84,7 +90,6 @@ function Content() {
 
       const jsonIndex = JSON.stringify(saveIndex);
       localStorage.setItem("index", jsonIndex);
-      console.log(jsonIndex);
 
       return saveIndex;
     });
@@ -97,6 +102,7 @@ function Content() {
         <div className="header">
           <h4>MUSIC PLAYER</h4>
           <h2>{player.name}</h2>
+          <h5>Artist: {player.artist}</h5>
         </div>
 
         <div className="cd">
@@ -133,62 +139,84 @@ function Content() {
             </div>
           </div>
         </div>
-        <TimeSlider
-          className="time-slider"
-          axis="x"
-          xmax={duration}
-          x={currentTime}
-          onChange={handleTimeSlider}
-          styles={{
-            track: {
-              margin: "10px",
-              backgroundColor: "#e3e3e3",
-              height: "5px",
-              width: "25em",
-            },
-            active: {
-              backgroundColor: "#333",
-              height: "5px",
-            },
-            thumb: {
-              width: "15px",
-              height: "15px",
-              backgroundColor: "#333",
-              borderRadius: 100,
-            },
-          }}
-        />
+        <div className="audio-time-slider">
+          <div className="current-time">
+            {(currentMinute > 9 ? currentMinute : "0" + currentMinute) +
+              ":" +
+              (currentSecond > 9 ? currentSecond : "0" + currentSecond)}
+          </div>
+          <TimeSlider
+            className="time-slider"
+            axis="x"
+            xmax={duration}
+            x={currentTime}
+            onChange={handleTimeSlider}
+            styles={{
+              track: {
+                margin: "10px",
+                backgroundColor: "#e3e3e3",
+                height: "5px",
+                width: "25em",
+              },
+              active: {
+                backgroundColor: "#333",
+                height: "5px",
+              },
+              thumb: {
+                width: "15px",
+                height: "15px",
+                backgroundColor: "#333",
+                borderRadius: 100,
+              },
+            }}
+          />
+          <div className="max-time">
+            {(Math.floor(duration / 60) > 9
+              ? Math.floor(duration / 60)
+              : "0" + Math.floor(duration / 60)) +
+              ":" +
+              (Math.floor(duration % 60) > 9
+                ? Math.floor(duration % 60)
+                : "0" + Math.floor(duration % 60))}
+          </div>
+        </div>
       </PlayProvider>
       <MusicProvider>
-        {list.map((music) => (
-          <div
-            key={music.id}
-            className="music"
-            onClick={() => {
-              setIndex(() => {
-                const saveIndex = music.id;
+        {list.map((music) => {
+          return (
+            <div
+              key={music.id}
+              className="music"
+              onClick={() => {
+                setIndex(() => {
+                  const saveIndex = music.id;
 
-                const jsonIndex = JSON.stringify(saveIndex);
-                localStorage.setItem("index", jsonIndex);
-                console.log(jsonIndex);
+                  const jsonIndex = JSON.stringify(saveIndex);
+                  localStorage.setItem("index", jsonIndex);
 
-                return saveIndex;
-              });
-              setPlayer(list[index]);
-            }}
-          >
-            <img className="music-img" src={music.image} />
-            <div className="music-title">
-              <div>{music.name}</div>
-              <div>{music.artist}</div>
+                  return saveIndex;
+                });
+                setPlayer(list[index]);
+              }}
+            >
+              <img className="music-img" src={music.image} />
+              <div className="music-title">
+                <div>{music.name}</div>
+                <div>{music.artist}</div>
+                {/* <div>{music.type}</div> */}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </MusicProvider>
       <audio
         ref={audio}
         src={player.url}
-        onTimeUpdate={() => setCurrentTime(audio.current.currentTime)}
+        onTimeUpdate={() => {
+          setCurrentTime(audio.current.currentTime);
+          setCurrentMinute(Math.floor(audio.current.currentTime / 60));
+          setCurrentSecond(Math.floor(audio.current.currentTime % 60));
+        }}
         onVolumeChange={() => setVolume(audio.current.volume)}
         onLoadedData={loadedData}
       />

@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  left: 15%;
+  left: 16%;
 }
 
 .btn-previous,
@@ -13,10 +13,10 @@
   width: 30px;
 }
 
-.btn-next:hover,
-.btn-previous:hover,
+/* .btn-next:hover,
+.btn-previous:hover, */
 .btn-play-pause:hover {
-  background-color: aqua;
+  background-color: white;
 }
 
 .btn-play-pause {
@@ -42,7 +42,7 @@
 
 .btn-repeat:active,
 .btn-random:active {
-  background-color: aqua;
+  background-color: white;
 }
 
 .btn-volume {

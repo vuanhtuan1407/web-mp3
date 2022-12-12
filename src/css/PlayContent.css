@@ -32,3 +32,9 @@
   background-color: #333;
   border-radius: 0;
 } */
+
+.audio-time-slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
