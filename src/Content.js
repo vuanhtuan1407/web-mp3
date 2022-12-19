@@ -203,6 +203,7 @@ function Content() {
               <div className="music-title">
                 <div>{music.name}</div>
                 <div>{music.artist}</div>
+                <tag>{music.type}</tag>
                 {/* <div>{music.type}</div> */}
               </div>
             </div>
