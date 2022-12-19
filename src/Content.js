@@ -234,6 +234,9 @@ function Content() {
               <div className="music-title">
                 <div>{music.name}</div>
                 <div>{music.artist}</div>
+                <div className="tags">
+                  {music.type.map((type) => <a>{type}</a>)}
+                </div>
                 {/* <div>{music.type}</div> */}
               </div>
             </div>
