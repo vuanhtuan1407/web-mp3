@@ -17,6 +17,7 @@ import "./css/MusicList.css";
 import "./css/PlayContent.css";
 import "./css/styles.css";
 import "./css/PlayProvider.css";
+import { type } from "@testing-library/user-event/dist/type";
 
 function Content() {
   const audio = useRef();
@@ -84,6 +85,12 @@ function Content() {
     setVolume(x);
   };
 
+  // const handleVolume = ({ y }) => {
+  //   audio.current.volume = y;
+  //   console.log(audio.current.volume);
+  //   setVolume(y);
+  // };
+
   useEffect(() => {
     setIndex((prevIndex) => {
       const saveIndex = prevIndex;
@@ -129,6 +136,30 @@ function Content() {
               <SpeakerIcon />
               <div className="volume-slider">
                 <TimeSlider
+                  // axis="y"
+                  // ymax={maxVolume}
+                  // ystep="0.001"
+                  // y={volume}
+                  // yreverse
+                  // onChange={handleVolume}
+                  // styles={{
+                  //   track: {
+                  //     margin: "10px",
+                  //     backgroundColor: "#9B9B9B",
+                  //     width: "5px",
+                  //     height: "25em",
+                  //   },
+                  //   active: {
+                  //     backgroundColor: "#fff",
+                  //     width: "5px",
+                  //   },
+                  //   thumb: {
+                  //     width: "15px",
+                  //     height: "15px",
+                  //     backgroundColor: "#fff",
+                  //     borderRadius: 100,
+                  //   },
+                  // }}
                   axis="x"
                   xmax={maxVolume}
                   xstep="0.001"
@@ -154,18 +185,18 @@ function Content() {
             styles={{
               track: {
                 margin: "10px",
-                backgroundColor: "#e3e3e3",
+                backgroundColor: "#9B9B9B",
                 height: "5px",
                 width: "25em",
               },
               active: {
-                backgroundColor: "#333",
+                backgroundColor: "#fff",
                 height: "5px",
               },
               thumb: {
                 width: "15px",
                 height: "15px",
-                backgroundColor: "#333",
+                backgroundColor: "#fff",
                 borderRadius: 100,
               },
             }}
@@ -203,6 +234,9 @@ function Content() {
               <div className="music-title">
                 <div>{music.name}</div>
                 <div>{music.artist}</div>
+                <div className="tags">
+                  {music.type.map((type) => <a>{type}</a>)}
+                </div>
                 {/* <div>{music.type}</div> */}
               </div>
             </div>
