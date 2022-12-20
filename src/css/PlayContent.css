@@ -1,3 +1,9 @@
+:root {
+  --size1: 20px;
+  --size2: 15px;
+  --size3: 10px;
+}
+
 .song-thumbnail {
   width: 220px;
   height: 220px;
@@ -15,26 +21,59 @@
   }
 }
 
-/* .time-slider div:nth-child(1) {
-  background-color: #e3e3e3;
-  height: 2px;
-}
-
-.time-slider div:nth-child(2) {
-  background-color: #333;
-  height: "2px";
-}
-
-.time-slider div:nth-child(3) {
-  margin-top: "-3px";
-  width: "8px";
-  height: "8px";
-  background-color: #333;
-  border-radius: 0;
-} */
-
 .audio-time-slider {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.controls {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-play-pause {
+  padding: var(--size2);
+  border-radius: 100%;
+}
+
+.btn-next,
+.btn-previous {
+  padding: var(--size2);
+}
+
+.btn-loop,
+.btn-shuffle {
+  padding: var(--size2);
+  margin: 0 20px 0 20px;
+}
+
+.btn-volume {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding: var(--size2);
+  border-radius: 100%;
+  top: 30px;
+  right: 30px;
+}
+
+.volume-slider {
+  position: absolute;
+  top: 60px;
+  right: 25px;
+  display: none;
+}
+
+.time-slider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.current-time,
+.duration-time {
+  margin: 0 5px 0 5px;
 }

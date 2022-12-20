@@ -1,5 +1,6 @@
 .play-provider {
   width: 100%;
+  justify-content: center;
   color: whitesmoke;
   /* background-color: #fff; */
 }

@@ -1,14 +1,42 @@
 import React, { useMemo, useRef, useState } from "react";
+import { FaRegPauseCircle, FaRegPlayCircle } from "react-icons/fa";
+import { MdPauseCircleOutline, MdPlayCircleOutline } from "react-icons/md";
+import { ImPause, ImPlay2 } from "react-icons/im";
+import { GiNextButton, GiPreviousButton } from "react-icons/gi";
+import {
+  TbArrowsShuffle,
+  TbPlayerSkipBack,
+  TbPlayerSkipForward,
+} from "react-icons/tb";
+import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
+import { RxSpeakerLoud, RxSpeakerOff } from "react-icons/rx";
+import { RiRepeat2Fill, RiRepeatOneFill } from "react-icons/ri";
 import PlayProvider from "./PlayProvider";
 import "../css/PlayContent.css";
 import { list } from "../MusicList/List.js";
 import { useDispatch, useSelector } from "react-redux";
-import { nextAudio } from "../redux/reducers/rootReducer.js";
+import {
+  nextAudio,
+  previousAudio,
+  randomAudio,
+  repeatAudio,
+} from "../redux/action/action.js";
+import { playerAction } from "../redux/action/action.js";
+import TimeSlider from "react-input-slider";
+import playIcon from "../icons/play-button.svg";
 
 function PlayContent() {
-  // const [index, setIndex] = useState(0);
-  // const [player, setPlayer] = useState(list[index]);
-  const [isPlay, setIsPlay] = useState(true);
+  const [isPlay, setIsPlay] = useState(false);
+  const [isLoop, setIsLoop] = useState(0);
+  const [isShuffle, setIsShuffle] = useState(false);
+  const [isMute, setIsMute] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [currentMinute, setCurrentMinute] = useState(0);
+  const [currentSecond, setCurrentSecond] = useState(0);
+  const [volume, setVolume] = useState(1);
+
+  const maxVolume = 1;
 
   const audio = useRef();
 
@@ -17,30 +45,76 @@ function PlayContent() {
 
   const player = useMemo(() => list[index], [index]);
 
-  const handlePlayer = () => {
+  const loadedData = () => {
+    setDuration(audio.current.duration);
+    if (isPlay) audio.current.play();
+    if (isMute) audio.current.volume = 0;
+  };
+
+  const handlePlay = () => {
     if (isPlay) {
-      player.pause();
+      audio.current.pause();
     } else {
-      player.play();
+      audio.current.play();
     }
     setIsPlay(!isPlay);
   };
 
   const handleNext = () => {
-    // if (index === list.length) {
-    //   setIndex(0);
-    //   setPlayer(list[0]);
-    // } else {
-    //   setIndex((prevIndex) => prevIndex + 1);
-    //   setPlayer(list[index]);
-    // }
     dispatch(nextAudio());
   };
 
-  const handleMusic = (music) => {
-    // let i = music.id;
-    // setPlayer(list[i]);
-    // setIndex(i);
+  const handlePrevious = () => {
+    dispatch(previousAudio());
+  };
+
+  const handleShuffle = () => {
+    setIsShuffle(!isShuffle);
+  };
+
+  const handleRepeat = () => {
+    dispatch(repeatAudio());
+  };
+
+  const handleTime = ({ x }) => {
+    audio.current.currentTime = x;
+    setCurrentTime(x);
+  };
+
+  const handleVolume = ({ y }) => {
+    audio.current.volume = y;
+    console.log(audio.current.volume);
+    setVolume(y);
+  };
+
+  const toggleVolume = () => {
+    if (isMute) audio.current.volume = 1;
+    else audio.current.volume = 0;
+    setIsMute(!isMute);
+    console.log(isMute);
+  };
+
+  const handleLoop = () => {
+    setIsLoop(isLoop + 1);
+  };
+
+  const handleOnEnded = () => {
+    switch (isLoop) {
+      case 0:
+        if (audio.current.currentTime == audio.current.duration) {
+          audio.current.pause();
+          setIsPlay(false);
+        }
+        break;
+
+      case 1:
+        dispatch(nextAudio());
+        break;
+
+      case 2:
+        dispatch(repeatAudio());
+        break;
+    }
   };
 
   return (
@@ -49,31 +123,105 @@ function PlayContent() {
         <h4>MUSIC PLAYER</h4>
         <h2>{player.name}</h2>
       </div>
-
       <div className="cd">
         <img className="song-thumbnail" src={player.image} />
       </div>
-
       <div className="controls">
-        <div className="btn-repeat"></div>
-        <div className="btn-previous"></div>
-        <div className="btn-play" onClick={handlePlayer}></div>
-        <div className="btn-next">
-          <button onClick={handleNext}>next</button>
+        <div className="btn-loop" onClick={handleLoop}>
+          {isLoop % 3 == 0 ? (
+            <RiRepeat2Fill size={22} />
+          ) : isLoop % 3 == 1 ? (
+            <RiRepeat2Fill size={22} color="purple" />
+          ) : (
+            <RiRepeatOneFill size={22} color="purple" />
+          )}
         </div>
-        <div className="btn-random"></div>
+        <div className="btn-previous" onClick={handlePrevious}>
+          {/* <GiPreviousButton size={30}/> */}
+          <BsSkipStartFill size={30} />
+        </div>
+        <div className="btn-play-pause" onClick={handlePlay}>
+          {isPlay ? <ImPause size={50} /> : <ImPlay2 size={50} />}
+        </div>
+        <div className="btn-next" onClick={handleNext}>
+          {/* <GiNextButton size={30}/> */}
+          <BsSkipEndFill size={30} />
+        </div>
+        <div className="btn-shuffle" onClick={handleShuffle}>
+          {isShuffle ? (
+            <TbArrowsShuffle size={25} />
+          ) : (
+            <TbArrowsShuffle size={25} color="purple" />
+          )}
+        </div>
+        <div className="btn-volume" onClick={toggleVolume}>
+          {isMute ? <RxSpeakerOff size={25} /> : <RxSpeakerLoud size={25} />}
+          <div className="volume-slider">
+            <TimeSlider
+              axis="y"
+              ymax={maxVolume}
+              ystep="0.001"
+              y={volume}
+              onChange={handleVolume}
+            />
+          </div>
+        </div>
       </div>
+
+      <div className="time-slider">
+        <div className="current-time">
+          {(currentMinute > 9 ? currentMinute : "0" + currentMinute) +
+            ":" +
+            (currentSecond > 9 ? currentSecond : "0" + currentSecond)}
+        </div>
+
+        <TimeSlider
+          axis="x"
+          xmax={duration}
+          x={currentTime}
+          onChange={handleTime}
+          styles={{
+            track: {
+              margin: "10px",
+              backgroundColor: "#9B9B9B",
+              height: "5px",
+              width: "25em",
+            },
+            active: {
+              backgroundColor: "#fff",
+              height: "5px",
+            },
+            thumb: {
+              width: "15px",
+              height: "15px",
+              backgroundColor: "#fff",
+              borderRadius: 100,
+            },
+          }}
+        />
+
+        <div className="duration-time">
+          {(Math.floor(duration / 60) > 9
+            ? Math.floor(duration / 60)
+            : "0" + Math.floor(duration / 60)) +
+            ":" +
+            (Math.floor(duration % 60) > 9
+              ? Math.floor(duration % 60)
+              : "0" + Math.floor(duration % 60))}
+        </div>
+      </div>
+
       <audio
         ref={audio}
         src={player.url}
-        autoPlay
-        // onTimeUpdate={() => {
-        //   setCurrentTime(audio.current.currentTime);
-        //   setCurrentMinute(Math.floor(audio.current.currentTime / 60));
-        //   setCurrentSecond(Math.floor(audio.current.currentTime % 60));
-        // }}
-        // onVolumeChange={() => setVolume(audio.current.volume)}
-        // onLoadedData={loadedData}
+        onTimeUpdate={() => {
+          setCurrentTime(audio.current.currentTime);
+          setCurrentMinute(Math.floor(audio.current.currentTime / 60));
+          setCurrentSecond(Math.floor(audio.current.currentTime % 60));
+        }}
+        onVolumeChange={() => setVolume(audio.current.volume)}
+        onLoadedData={loadedData}
+        onEnded={handleOnEnded}
       />
     </PlayProvider>
   );

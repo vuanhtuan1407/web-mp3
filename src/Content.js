@@ -15,7 +15,6 @@ import RandomIcon from "./icons/RandomIcon";
 import SpeakerIcon from "./icons/SpeakerIcon";
 import "./css/MusicList.css";
 import "./css/PlayContent.css";
-import "./css/styles.css";
 import "./css/PlayProvider.css";
 import { type } from "@testing-library/user-event/dist/type";
 
