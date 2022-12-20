@@ -1,7 +1,32 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { changeAudio } from "../redux/reducers/rootReducer.js";
 import { list } from "./List";
 import MusicProvider from "./MusicProvider";
 
-function MusicList() {}
+function MusicList() {
+  const dispatch = useDispatch();
 
+  const handleClick = (index) => {
+    dispatch(changeAudio({ index }));
+  };
+  return (
+    <div className="music-list">
+      {list.map((music, index) => (
+        <div key={index} className="music" onClick={() => handleClick(index)}>
+          <img className="music-img" src={music.image} />
+          <div className="music-title">
+            <div>{music.name}</div>
+            <div>{music.artist}</div>
+            <div className="tags">
+              {music.type.map((type) => (
+                <a href="#">{type}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 export default MusicList;
