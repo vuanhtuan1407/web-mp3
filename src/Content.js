@@ -213,7 +213,7 @@ function Content() {
         </div>
       </PlayProvider>
       <MusicProvider>
-        {list.map((music) => {
+        {list.map((music, index) => {
           return (
             <div
               key={music.id}
@@ -235,7 +235,9 @@ function Content() {
                 <div>{music.name}</div>
                 <div>{music.artist}</div>
                 <div className="tags">
-                  {music.type.map((type) => <a>{type}</a>)}
+                  {music.type.map((type) => (
+                    <a>{type}</a>
+                  ))}
                 </div>
                 {/* <div>{music.type}</div> */}
               </div>

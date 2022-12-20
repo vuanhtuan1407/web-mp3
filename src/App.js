@@ -9,9 +9,9 @@ import Content from "./Content.js"
 function App() {
   return (
     <div className="App">
-      {/* <PlayContent />
-      <MusicList /> */}
-      <Content />
+      <PlayContent />
+      <MusicList />
+      {/* <Content /> */}
     </div>
   );
 }
