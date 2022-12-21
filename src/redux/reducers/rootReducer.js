@@ -5,7 +5,6 @@ import { playerAction } from "../action/action.js";
 const initState = { index: 0 };
 
 function rootReducer(state = initState, action) {
-  console.log(action);
   switch (action.type) {
     case playerAction.CHANGE_AUDIO: {
       let index = action.payload.index;
@@ -42,10 +41,7 @@ function rootReducer(state = initState, action) {
     }
 
     case playerAction.REPEAT_AUDIO: {
-      return {
-        ...state,
-        index: state.index,
-      };
+      return state;
     }
 
     default:

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FaRegPauseCircle, FaRegPlayCircle } from "react-icons/fa";
 import { MdPauseCircleOutline, MdPlayCircleOutline } from "react-icons/md";
 import { ImPause, ImPlay2 } from "react-icons/im";
@@ -61,19 +61,17 @@ function PlayContent() {
   };
 
   const handleNext = () => {
-    dispatch(nextAudio());
+    if (isShuffle) dispatch(randomAudio());
+    else dispatch(nextAudio());
   };
 
   const handlePrevious = () => {
-    dispatch(previousAudio());
+    if (isShuffle) dispatch(randomAudio());
+    else dispatch(previousAudio());
   };
 
   const handleShuffle = () => {
     setIsShuffle(!isShuffle);
-  };
-
-  const handleRepeat = () => {
-    dispatch(repeatAudio());
   };
 
   const handleTime = ({ x }) => {
@@ -94,28 +92,27 @@ function PlayContent() {
     console.log(isMute);
   };
 
-  const handleLoop = () => {
+  const toggleLoop = () => {
     setIsLoop(isLoop + 1);
   };
 
-  const handleOnEnded = () => {
-    switch (isLoop) {
-      case 0:
-        if (audio.current.currentTime == audio.current.duration) {
-          audio.current.pause();
-          setIsPlay(false);
-        }
-        break;
-
-      case 1:
-        dispatch(nextAudio());
-        break;
-
-      case 2:
-        dispatch(repeatAudio());
-        break;
-    }
+  const handleRepeat = () => {
+    dispatch(repeatAudio());
+    setIsPlay(true);
+    audio.current.play();
   };
+
+  const handleOnEnded = () => {
+    if (isLoop == 2) handleRepeat();
+    else handleNext();
+  };
+
+  useEffect(() => {
+    if (isLoop % 3 == 0 && currentTime == duration) {
+      audio.current.pause();
+      setIsPlay(false);
+    }
+  }, [currentTime]);
 
   return (
     <PlayProvider>
@@ -127,7 +124,7 @@ function PlayContent() {
         <img className="song-thumbnail" src={player.image} />
       </div>
       <div className="controls">
-        <div className="btn-loop" onClick={handleLoop}>
+        <div className="btn-loop" onClick={toggleLoop}>
           {isLoop % 3 == 0 ? (
             <RiRepeat2Fill size={22} />
           ) : isLoop % 3 == 1 ? (
