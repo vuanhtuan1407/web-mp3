@@ -83,6 +83,8 @@ function PlayContent() {
     audio.current.volume = y;
     console.log(audio.current.volume);
     setVolume(y);
+    if (y == 0) setIsMute(true);
+    else setIsMute(false);
   };
 
   const toggleVolume = () => {
@@ -146,16 +148,19 @@ function PlayContent() {
         </div>
         <div className="btn-shuffle" onClick={handleShuffle}>
           {isShuffle ? (
-            <TbArrowsShuffle size={25} />
-          ) : (
             <TbArrowsShuffle size={25} color="purple" />
+          ) : (
+            <TbArrowsShuffle size={25} />
           )}
         </div>
-        <div className="btn-volume" onClick={toggleVolume}>
-          {isMute ? <RxSpeakerOff size={25} /> : <RxSpeakerLoud size={25} />}
+        <div className="btn-volume">
+          <div className="volume-icon" onClick={toggleVolume}>
+            {isMute ? <RxSpeakerOff size={25} /> : <RxSpeakerLoud size={25} />}
+          </div>
           <div className="volume-slider">
             <TimeSlider
               axis="y"
+              yreverse
               ymax={maxVolume}
               ystep="0.001"
               y={volume}

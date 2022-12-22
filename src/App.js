@@ -3,8 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import PlayContent from "./PlayContent/PlayContent.js";
 import MusicList from "./MusicList/MusicList";
-import Content from "./Content.js"
-
+import Content from "./Content.js";
 
 function App() {
   return (

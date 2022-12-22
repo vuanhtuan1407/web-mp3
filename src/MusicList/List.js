@@ -68,3 +68,5 @@ export const list = [
     type: ["Pop", "EDM"]
   },
 ];
+
+

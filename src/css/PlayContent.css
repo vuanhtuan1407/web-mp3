@@ -61,10 +61,16 @@
 }
 
 .volume-slider {
-  position: absolute;
-  top: 60px;
-  right: 25px;
+  position: relative;
+  padding: 25px;
+  top: 45px;
+  right: 0px;
   display: none;
+}
+
+.btn-volume:hover .volume-slider {
+  position: absolute;
+  display: flex;
 }
 
 .time-slider {
