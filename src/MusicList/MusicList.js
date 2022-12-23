@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { changeAudio } from "../redux/action/action.js";
 import { list } from "./List";
 import MusicProvider from "./MusicProvider";
+import "../css/MusicList.css"
+import "../css/MusicProvider.css"
 
 function MusicList() {
   const dispatch = useDispatch();

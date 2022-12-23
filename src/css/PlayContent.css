@@ -9,7 +9,7 @@
   height: 220px;
   border-radius: 100%;
   object-fit: cover;
-  animation: rotate 6s linear infinite;
+  animation: rotate 15s linear infinite;
 }
 
 @keyframes rotate {
@@ -27,11 +27,39 @@
   align-items: center;
 }
 
-.controls {
+/* .controls {
+  /* color: black; 
+  position: fixed;
+  bottom: 20px;
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: center;
   align-items: center;
+  background-color: rgb(77, 9, 83);
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+.btn-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+.controls {
+  /* color: black;  */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 0 0;
+}
+
+.btn-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-play-pause {
