@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { changeAudio } from "../redux/action/action.js";
-import { list } from "./List";
+import List, { list } from "./List";
 import MusicProvider from "./MusicProvider";
 import "../css/MusicList.css"
 import "../css/MusicProvider.css"
@@ -14,7 +14,7 @@ function MusicList() {
   };
   return (
     <MusicProvider>
-      {list.map((music, index) => (
+      {/* {list.map((music, index) => (
         <div key={index} className="music" onClick={() => handleClick(index)}>
           <img className="music-img" src={music.image} />
           <div className="music-title">
@@ -27,7 +27,8 @@ function MusicList() {
             </div>
           </div>
         </div>
-      ))}
+      ))} */}
+      <List />
     </MusicProvider>
     
   );
