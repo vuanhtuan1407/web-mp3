@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { changeAudio } from "../redux/action/action.js";
-import List, { list } from "./List";
+import { changeAudio, updateList } from "../redux/action/action.js";
+import { list } from "./List";
 import MusicProvider from "./MusicProvider";
-import "../css/MusicList.css"
-import "../css/MusicProvider.css"
+import "../css/MusicList.css";
+import "../css/MusicProvider.css";
 
 function MusicList() {
   const dispatch = useDispatch();
@@ -12,10 +12,39 @@ function MusicList() {
   const handleClick = (index) => {
     dispatch(changeAudio({ index }));
   };
+
+  const [dragIndex, setDragIndex] = useState(0);
+  // const [dragOverIndex, setDragOverIndex] = useState(0);
+  const [dragItem, setDragItem] = useState();
+  const [musicList, setMusicList] = useState(list);
+
   return (
     <MusicProvider>
-      {/* {list.map((music, index) => (
-        <div key={index} className="music" onClick={() => handleClick(index)}>
+      {musicList.map((music, index) => (
+        <div
+          key={index}
+          className="music"
+          onClick={() => handleClick(index)}
+          draggable
+          onDragStart={(e) => {
+            setDragIndex(index);
+            setDragItem(list[index]);
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setDragImage(e.target, 20, 20);
+          }}
+          onDragOver={() => {
+            console.log(index);
+            if (index === dragIndex) return;
+            let audioList = list.filter((audio) => audio !== dragItem);
+            audioList.splice(index, 0, dragItem);
+            console.log(audioList);
+            setMusicList(audioList);
+            dispatch(updateList({ index }));
+          }}
+          onDragEnd={() => {
+            console.log(index);
+          }}
+        >
           <img className="music-img" src={music.image} />
           <div className="music-title">
             <div>{music.name}</div>
@@ -27,10 +56,9 @@ function MusicList() {
             </div>
           </div>
         </div>
-      ))} */}
-      <List />
+      ))}
     </MusicProvider>
-    
   );
 }
+
 export default MusicList;

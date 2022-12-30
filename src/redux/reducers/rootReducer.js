@@ -1,6 +1,6 @@
 import React from "react";
 import { list } from "../../MusicList/List.js";
-import { playerAction } from "../action/action.js";
+import { playerAction, systemAction } from "../action/action.js";
 
 const initState = { index: 0 };
 
@@ -44,9 +44,18 @@ function rootReducer(state = initState, action) {
       return state;
     }
 
+    case systemAction.UPDATE_LIST: {
+      let index = action.payload.index;
+      return {
+        ...state,
+        index
+      }
+    }
+
     default:
       return state;
   }
+
 }
 
 export default rootReducer;

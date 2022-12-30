@@ -1,6 +1,6 @@
 import DraggableList from "react-draggable-list";
 import dragula from "react-dragula";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export const list = [
   {
@@ -72,39 +72,3 @@ export const list = [
     type: ["Pop", "EDM"],
   },
 ];
-
-// function List() {
-//   return <DraggableList list={list} />;
-// }
-
-function List() {
-  const dragulaDecorator = (componentBackingInstance) => {
-    if (componentBackingInstance) {
-      let options = {
-        mirrorContainer: document.body,
-        ignoreInputTextSelection: false,
-      };
-      dragula([componentBackingInstance], options);
-    }
-  };
-  return (
-    <div ref={dragulaDecorator}>
-      {list.map((music, index) => (
-        <div key={index} className="music">
-          <img className="music-img" src={music.image} />
-          <div className="music-title">
-            <div>{music.name}</div>
-            <div>{music.artist}</div>
-            <div className="tags">
-              {music.type.map((type) => (
-                <a href="#">{type}</a>
-              ))}
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export default List;
