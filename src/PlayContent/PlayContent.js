@@ -107,13 +107,6 @@ function PlayContent() {
     else handleNext();
   };
 
-  useEffect(() => {
-    if (isLoop % 3 == 0 && currentTime == duration) {
-      audio.current.pause();
-      setIsPlay(false);
-    }
-  }, [currentTime]);
-
   return (
     <PlayProvider>
       <div className="header">
