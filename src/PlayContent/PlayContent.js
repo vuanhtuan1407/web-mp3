@@ -36,15 +36,20 @@ function PlayContent() {
   const [currentMinute, setCurrentMinute] = useState(0);
   const [currentSecond, setCurrentSecond] = useState(0);
   const [volume, setVolume] = useState(1);
+  // const [player, setPlayer] = useState(list[0]);
 
   const maxVolume = 1;
 
   const audio = useRef();
 
-  const index = useSelector((state) => state.index);
+  const index = useSelector((state) => state.playerReducer.index);
+  const musicList = useSelector((state) => state.listReducer.audioList);
+
   const dispatch = useDispatch();
 
-  const player = useMemo(() => list[index], [index]);
+  const player = useMemo(() => musicList[index], [musicList, index]);
+
+  console.log({ index, musicList, player });
 
   const loadedData = () => {
     setDuration(audio.current.duration);

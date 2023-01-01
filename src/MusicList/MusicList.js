@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { changeAudio, updateList } from "../redux/action/action.js";
 import { list } from "./List";
 import MusicProvider from "./MusicProvider";
 import "../css/MusicList.css";
 import "../css/MusicProvider.css";
+import { store } from "../redux/store/store.js";
 
 function MusicList() {
   const dispatch = useDispatch();
@@ -14,9 +15,10 @@ function MusicList() {
   };
 
   const [dragIndex, setDragIndex] = useState(0);
-  // const [dragOverIndex, setDragOverIndex] = useState(0);
-  const [dragItem, setDragItem] = useState();
-  const [musicList, setMusicList] = useState(list);
+  const [dragOverIndex, setDragOverIndex] = useState(0);
+  const [dragItem, setDragItem] = useState(list[0]);
+  // const [musicList, setMusicList] = useState(list);
+  const musicList = useSelector((state) => state.listReducer.audioList);
 
   return (
     <MusicProvider>
@@ -28,21 +30,20 @@ function MusicList() {
           draggable
           onDragStart={(e) => {
             setDragIndex(index);
-            setDragItem(list[index]);
-            e.dataTransfer.effectAllowed = "move";
+            setDragItem(musicList[index]);
+            e.dataTransfer.effectAllowed = "all";
             e.dataTransfer.setDragImage(e.target, 20, 20);
           }}
           onDragOver={() => {
             console.log(index);
-            if (index === dragIndex) return;
-            let audioList = list.filter((audio) => audio !== dragItem);
-            audioList.splice(index, 0, dragItem);
-            console.log(audioList);
-            setMusicList(audioList);
-            dispatch(updateList({ index }));
+            setDragOverIndex(index);
+            let List = musicList.filter((audio) => audio !== dragItem);
+            List.splice(index, 0, dragItem);
+            dispatch(changeAudio({ index }));
+            dispatch(updateList({ audioList: List }));
           }}
           onDragEnd={() => {
-            console.log(index);
+            console.log({ index, musicList });
           }}
         >
           <img className="music-img" src={music.image} />
