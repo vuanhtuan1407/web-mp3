@@ -17,8 +17,7 @@ function MusicList() {
   const [dragIndex, setDragIndex] = useState(0);
   const [dragOverIndex, setDragOverIndex] = useState(0);
   const [dragItem, setDragItem] = useState(list[0]);
-  // const [musicList, setMusicList] = useState(list);
-  const musicList = useSelector((state) => state.listReducer.audioList);
+  const musicList = useSelector((state) => state.list.audioList);
 
   return (
     <MusicProvider>

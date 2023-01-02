@@ -42,8 +42,8 @@ function PlayContent() {
 
   const audio = useRef();
 
-  const index = useSelector((state) => state.playerReducer.index);
-  const musicList = useSelector((state) => state.listReducer.audioList);
+  const index = useSelector((state) => state.player.index);
+  const musicList = useSelector((state) => state.list.audioList);
 
   const dispatch = useDispatch();
 
