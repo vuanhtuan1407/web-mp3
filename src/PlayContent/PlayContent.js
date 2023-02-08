@@ -27,6 +27,9 @@ import TimeSlider from "react-input-slider";
 import playIcon from "../icons/play-button.svg";
 
 function PlayContent() {
+  const storageIndex = JSON.parse(localStorage.getItem("index"));
+  const storageList = JSON.parse(localStorage.getItem("music-list"));
+
   const [isPlay, setIsPlay] = useState(false);
   const [isLoop, setIsLoop] = useState(0);
   const [isShuffle, setIsShuffle] = useState(false);
@@ -37,13 +40,35 @@ function PlayContent() {
   const [currentSecond, setCurrentSecond] = useState(0);
   const [volume, setVolume] = useState(1);
   // const [player, setPlayer] = useState(list[0]);
+  const [index, setIndex] = useState(storageIndex);
+  const [musicList, setMusicList] = useState(storageList);
 
   const maxVolume = 1;
 
   const audio = useRef();
+  // const index = useSelector((state) => state.player.index);
+  // console.log(index);
+  // const jsonIndex = JSON.stringify(index);
+  // localStorage.setItem("index", jsonIndex);
 
-  const index = useSelector((state) => state.player.index);
-  const musicList = useSelector((state) => state.list.audioList);
+  // const musicList = useSelector((state) => state.list.audioList);
+  // const jsonList = JSON.stringify(musicList);
+  // localStorage.setItem("music-list", jsonList);
+
+  // const updateState = () => {
+  //   setIndex(() => {
+  //     const index = useSelector((state) => state.player.index);
+  //     console.log(index);
+  //     const jsonIndex = JSON.stringify(index);
+  //     localStorage.setItem("index", jsonIndex);
+  //   });
+
+  //   setMusicList(() => {
+  //     const musicList = useSelector((state) => state.list.audioList);
+  //     const jsonList = JSON.stringify(musicList);
+  //     localStorage.setItem("music-list", jsonList);
+  //   });
+  // };
 
   const dispatch = useDispatch();
 
@@ -121,6 +146,10 @@ function PlayContent() {
       setIsPlay(false);
     }
   }, [currentTime]);
+
+  // useEffect(() => {
+  //   updateState();
+  // }, [musicList, index]);
 
   return (
     <PlayProvider>

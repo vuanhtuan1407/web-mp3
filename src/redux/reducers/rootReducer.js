@@ -5,3 +5,4 @@ export const rootReducer = combineReducers({
   player: playerReducer,
   list: listReducer,
 });
+                    

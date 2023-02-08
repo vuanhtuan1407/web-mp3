@@ -32,6 +32,20 @@
   object-fit: cover;
 }
 
+.music-length {
+  color: #a618b3;
+  font-weight: bold;
+  position: absolute;
+  right: 40px;
+}
+
+.music:hover .music-length {
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  right: 40px;
+}
+
 .tags a {
   display: inline-block;
   height: 21px;

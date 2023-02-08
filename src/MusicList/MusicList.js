@@ -6,8 +6,11 @@ import MusicProvider from "./MusicProvider";
 import "../css/MusicList.css";
 import "../css/MusicProvider.css";
 import { store } from "../redux/store/store.js";
+import {} from "react-icons";
+import { BsFillPlayFill } from "react-icons/bs";
 
 function MusicList() {
+  // storageList = JSON.parse(localStorage.getItem('music-list'));
   const dispatch = useDispatch();
 
   const handleClick = (index) => {
@@ -17,7 +20,8 @@ function MusicList() {
   const [dragIndex, setDragIndex] = useState(0);
   const [dragOverIndex, setDragOverIndex] = useState(0);
   const [dragItem, setDragItem] = useState(list[0]);
-  const musicList = useSelector((state) => state.list.audioList);
+  // const musicList = useSelector((state) => state.list.audioList);
+  const musicList = JSON.parse(localStorage.getItem('music-list'));
 
   return (
     <MusicProvider>
@@ -34,7 +38,6 @@ function MusicList() {
             e.dataTransfer.setDragImage(e.target, 20, 20);
           }}
           onDragOver={() => {
-            console.log(index);
             setDragOverIndex(index);
             let List = musicList.filter((audio) => audio !== dragItem);
             List.splice(index, 0, dragItem);
@@ -54,6 +57,10 @@ function MusicList() {
                 <a href="#">{type}</a>
               ))}
             </div>
+          </div>
+          <div className="music-length">
+            <BsFillPlayFill />
+            {music.length}
           </div>
         </div>
       ))}
