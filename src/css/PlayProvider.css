@@ -1,6 +1,17 @@
-.play-provider {
+/* .play-provider {
   width: 100%;
   justify-content: center;
   color: whitesmoke;
-  /* background-color: #fff; */
+  background-color: #fff;
+} */
+
+.play-provider {
+  color: white;
+  width: 50%;
+  position: fixed;
+  top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

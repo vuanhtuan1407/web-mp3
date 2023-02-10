@@ -13,6 +13,7 @@ import { RxSpeakerLoud, RxSpeakerOff } from "react-icons/rx";
 import { RiRepeat2Fill, RiRepeatOneFill } from "react-icons/ri";
 import PlayProvider from "./PlayProvider";
 import "../css/PlayContent.css";
+import "../css/PlayProvider.css";
 import { list } from "../MusicList/List.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -26,6 +27,9 @@ import TimeSlider from "react-input-slider";
 import playIcon from "../icons/play-button.svg";
 
 function PlayContent() {
+  const storageIndex = JSON.parse(localStorage.getItem("index"));
+  const storageList = JSON.parse(localStorage.getItem("music-list"));
+
   const [isPlay, setIsPlay] = useState(false);
   const [isLoop, setIsLoop] = useState(0);
   const [isShuffle, setIsShuffle] = useState(false);
@@ -35,15 +39,42 @@ function PlayContent() {
   const [currentMinute, setCurrentMinute] = useState(0);
   const [currentSecond, setCurrentSecond] = useState(0);
   const [volume, setVolume] = useState(1);
+  // const [player, setPlayer] = useState(list[0]);
+  // const [index, setIndex] = useState(storageIndex);
+  // const [musicList, setMusicList] = useState(storageList);
 
   const maxVolume = 1;
 
   const audio = useRef();
+  const index = useSelector((state) => state.player.index);
+  console.log(index);
+  // const jsonIndex = JSON.stringify(index);
+  // localStorage.setItem("index", jsonIndex);
 
-  const index = useSelector((state) => state.index);
+  const musicList = useSelector((state) => state.list.audioList);
+  // const jsonList = JSON.stringify(musicList);
+  // localStorage.setItem("music-list", jsonList);
+
+  // const updateState = () => {
+  //   setIndex(() => {
+  //     const index = useSelector((state) => state.player.index);
+  //     console.log(index);
+  //     const jsonIndex = JSON.stringify(index);
+  //     localStorage.setItem("index", jsonIndex);
+  //   });
+
+  //   setMusicList(() => {
+  //     const musicList = useSelector((state) => state.list.audioList);
+  //     const jsonList = JSON.stringify(musicList);
+  //     localStorage.setItem("music-list", jsonList);
+  //   });
+  // };
+
   const dispatch = useDispatch();
 
-  const player = useMemo(() => list[index], [index]);
+  const player = useMemo(() => musicList[index], [musicList, index]);
+
+  console.log({ index, musicList, player });
 
   const loadedData = () => {
     setDuration(audio.current.duration);
@@ -83,6 +114,8 @@ function PlayContent() {
     audio.current.volume = y;
     console.log(audio.current.volume);
     setVolume(y);
+    if (y == 0) setIsMute(true);
+    else setIsMute(false);
   };
 
   const toggleVolume = () => {
@@ -107,6 +140,17 @@ function PlayContent() {
     else handleNext();
   };
 
+  useEffect(() => {
+    if (isLoop % 3 == 0 && currentTime == duration) {
+      audio.current.pause();
+      setIsPlay(false);
+    }
+  }, [currentTime]);
+
+  // useEffect(() => {
+  //   updateState();
+  // }, [musicList, index]);
+
   return (
     <PlayProvider>
       <div className="header">
@@ -117,87 +161,95 @@ function PlayContent() {
         <img className="song-thumbnail" src={player.image} />
       </div>
       <div className="controls">
-        <div className="btn-loop" onClick={toggleLoop}>
-          {isLoop % 3 == 0 ? (
-            <RiRepeat2Fill size={22} />
-          ) : isLoop % 3 == 1 ? (
-            <RiRepeat2Fill size={22} color="purple" />
-          ) : (
-            <RiRepeatOneFill size={22} color="purple" />
-          )}
-        </div>
-        <div className="btn-previous" onClick={handlePrevious}>
-          {/* <GiPreviousButton size={30}/> */}
-          <BsSkipStartFill size={30} />
-        </div>
-        <div className="btn-play-pause" onClick={handlePlay}>
-          {isPlay ? <ImPause size={50} /> : <ImPlay2 size={50} />}
-        </div>
-        <div className="btn-next" onClick={handleNext}>
-          {/* <GiNextButton size={30}/> */}
-          <BsSkipEndFill size={30} />
-        </div>
-        <div className="btn-shuffle" onClick={handleShuffle}>
-          {isShuffle ? (
-            <TbArrowsShuffle size={25} />
-          ) : (
-            <TbArrowsShuffle size={25} color="purple" />
-          )}
-        </div>
-        <div className="btn-volume" onClick={toggleVolume}>
-          {isMute ? <RxSpeakerOff size={25} /> : <RxSpeakerLoud size={25} />}
-          <div className="volume-slider">
-            <TimeSlider
-              axis="y"
-              ymax={maxVolume}
-              ystep="0.001"
-              y={volume}
-              onChange={handleVolume}
-            />
+        <div className="btn-controls">
+          <div className="btn-loop" onClick={toggleLoop}>
+            {isLoop % 3 == 0 ? (
+              <RiRepeat2Fill size={22} />
+            ) : isLoop % 3 == 1 ? (
+              <RiRepeat2Fill size={22} color="purple" />
+            ) : (
+              <RiRepeatOneFill size={22} color="purple" />
+            )}
+          </div>
+          <div className="btn-previous" onClick={handlePrevious}>
+            {/* <GiPreviousButton size={30}/> */}
+            <BsSkipStartFill size={30} />
+          </div>
+          <div className="btn-play-pause" onClick={handlePlay}>
+            {isPlay ? <ImPause size={50} /> : <ImPlay2 size={50} />}
+          </div>
+          <div className="btn-next" onClick={handleNext}>
+            {/* <GiNextButton size={30}/> */}
+            <BsSkipEndFill size={30} />
+          </div>
+          <div className="btn-shuffle" onClick={handleShuffle}>
+            {isShuffle ? (
+              <TbArrowsShuffle size={25} color="purple" />
+            ) : (
+              <TbArrowsShuffle size={25} />
+            )}
+          </div>
+          <div className="btn-volume">
+            <div className="volume-icon" onClick={toggleVolume}>
+              {isMute ? (
+                <RxSpeakerOff size={25} />
+              ) : (
+                <RxSpeakerLoud size={25} />
+              )}
+            </div>
+            <div className="volume-slider">
+              <TimeSlider
+                axis="y"
+                yreverse
+                ymax={maxVolume}
+                ystep="0.001"
+                y={volume}
+                onChange={handleVolume}
+              />
+            </div>
           </div>
         </div>
-      </div>
+        <div className="time-slider">
+          <div className="current-time">
+            {(currentMinute > 9 ? currentMinute : "0" + currentMinute) +
+              ":" +
+              (currentSecond > 9 ? currentSecond : "0" + currentSecond)}
+          </div>
 
-      <div className="time-slider">
-        <div className="current-time">
-          {(currentMinute > 9 ? currentMinute : "0" + currentMinute) +
-            ":" +
-            (currentSecond > 9 ? currentSecond : "0" + currentSecond)}
-        </div>
+          <TimeSlider
+            axis="x"
+            xmax={duration}
+            x={currentTime}
+            onChange={handleTime}
+            styles={{
+              track: {
+                margin: "10px",
+                backgroundColor: "#9B9B9B",
+                height: "5px",
+                width: "25em",
+              },
+              active: {
+                backgroundColor: "#fff",
+                height: "5px",
+              },
+              thumb: {
+                width: "15px",
+                height: "15px",
+                backgroundColor: "#fff",
+                borderRadius: 100,
+              },
+            }}
+          />
 
-        <TimeSlider
-          axis="x"
-          xmax={duration}
-          x={currentTime}
-          onChange={handleTime}
-          styles={{
-            track: {
-              margin: "10px",
-              backgroundColor: "#9B9B9B",
-              height: "5px",
-              width: "25em",
-            },
-            active: {
-              backgroundColor: "#fff",
-              height: "5px",
-            },
-            thumb: {
-              width: "15px",
-              height: "15px",
-              backgroundColor: "#fff",
-              borderRadius: 100,
-            },
-          }}
-        />
-
-        <div className="duration-time">
-          {(Math.floor(duration / 60) > 9
-            ? Math.floor(duration / 60)
-            : "0" + Math.floor(duration / 60)) +
-            ":" +
-            (Math.floor(duration % 60) > 9
-              ? Math.floor(duration % 60)
-              : "0" + Math.floor(duration % 60))}
+          <div className="duration-time">
+            {(Math.floor(duration / 60) > 9
+              ? Math.floor(duration / 60)
+              : "0" + Math.floor(duration / 60)) +
+              ":" +
+              (Math.floor(duration % 60) > 9
+                ? Math.floor(duration % 60)
+                : "0" + Math.floor(duration % 60))}
+          </div>
         </div>
       </div>
 

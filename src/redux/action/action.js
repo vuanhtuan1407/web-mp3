@@ -1,9 +1,20 @@
+export const systemAction = {
+  UPDATE_LIST: "update-list",
+};
+
 export const playerAction = {
   CHANGE_AUDIO: "change-audio",
   NEXT_AUDIO: "next-audio",
   PREVIOUS_AUDIO: "previous-audio",
   RANDOM_AUDIO: "random-audio",
   REPEAT_AUDIO: "repeat-audio",
+};
+
+export const updateList = (payload) => {
+  return {
+    type: systemAction.UPDATE_LIST,
+    payload,
+  };
 };
 
 export const changeAudio = (payload) => {
