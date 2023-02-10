@@ -10,7 +10,10 @@ import {} from "react-icons";
 import { BsFillPlayFill } from "react-icons/bs";
 
 function MusicList() {
-  // storageList = JSON.parse(localStorage.getItem('music-list'));
+  const storageList = JSON.parse(localStorage.getItem("music-list"));
+  // const musicList = JSON.parse(localStorage.getItem("music-list"));
+  // const [musicList, setMusicList] = useState(storageList);
+
   const dispatch = useDispatch();
 
   const handleClick = (index) => {
@@ -20,8 +23,14 @@ function MusicList() {
   const [dragIndex, setDragIndex] = useState(0);
   const [dragOverIndex, setDragOverIndex] = useState(0);
   const [dragItem, setDragItem] = useState(list[0]);
-  // const musicList = useSelector((state) => state.list.audioList);
-  const musicList = JSON.parse(localStorage.getItem('music-list'));
+  const musicList = useSelector((state) => state.list.audioList);
+  const newList = useSelector((state) => state.list.audioList);
+  console.log(musicList);
+  // if (musicList !== storageList) {
+  //   dispatch(dispatch(updateList({ audioList: storageList })))
+  //   const jsonList = JSON.stringify(newList);
+  //   localStorage.setItem("music-list", jsonList);
+  // }
 
   return (
     <MusicProvider>

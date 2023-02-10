@@ -40,18 +40,18 @@ function PlayContent() {
   const [currentSecond, setCurrentSecond] = useState(0);
   const [volume, setVolume] = useState(1);
   // const [player, setPlayer] = useState(list[0]);
-  const [index, setIndex] = useState(storageIndex);
-  const [musicList, setMusicList] = useState(storageList);
+  // const [index, setIndex] = useState(storageIndex);
+  // const [musicList, setMusicList] = useState(storageList);
 
   const maxVolume = 1;
 
   const audio = useRef();
-  // const index = useSelector((state) => state.player.index);
-  // console.log(index);
+  const index = useSelector((state) => state.player.index);
+  console.log(index);
   // const jsonIndex = JSON.stringify(index);
   // localStorage.setItem("index", jsonIndex);
 
-  // const musicList = useSelector((state) => state.list.audioList);
+  const musicList = useSelector((state) => state.list.audioList);
   // const jsonList = JSON.stringify(musicList);
   // localStorage.setItem("music-list", jsonList);
 

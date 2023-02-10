@@ -8,7 +8,7 @@ export const list = [
     name: "Into the night",
     artist: "YOASOBI",
     image:
-      "https://cdn-japantimes.com/wp-content/uploads/2021/08/np_file_105988-870x489.jpeg",
+      "https://cdn-japanlengths.com/wp-content/uploads/2021/08/np_file_105988-870x489.jpeg",
     url: "https://drive.google.com/uc?export=view&id=1AgGUBxx1USLSU8o7JCGQheYGoHwFD6fm",
     type: ["EDM"],
     length: "04:35",
@@ -61,7 +61,7 @@ export const list = [
   },
   {
     id: 6,
-    name: "Adventure of a lifetime",
+    name: "Adventure of a lifelength",
     artist: "Coldplay",
     image:
       "https://i1.sndcdn.com/artworks-YEwXu5sQShwND3Rc-r1FSRw-t500x500.jpg",
