@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeAudio, updateList } from "../redux/action/action.js";
 import { list } from "./List";
 import MusicProvider from "./MusicProvider";
 import "../css/MusicList.css";
 import "../css/MusicProvider.css";
-import { store } from "../redux/store/store.js";
 import {} from "react-icons";
 import { BsFillPlayFill, BsList } from "react-icons/bs";
 
@@ -26,11 +25,6 @@ function MusicList() {
   const musicList = useSelector((state) => state.list.audioList);
   const newList = useSelector((state) => state.list.audioList);
   console.log(musicList);
-  // if (musicList !== storageList) {
-  //   dispatch(dispatch(updateList({ audioList: storageList })))
-  //   const jsonList = JSON.stringify(newList);
-  //   localStorage.setItem("music-list", jsonList);
-  // }
 
   return (
     <MusicProvider>
@@ -65,9 +59,7 @@ function MusicList() {
             <div className="tags">
               {music.type.map((type) => (
                 <div className="tag">
-                  <a href="#">
-                    {type}
-                  </a>
+                  <a href="#">{type}</a>
                 </div>
               ))}
             </div>

@@ -1,20 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { FaRegPauseCircle, FaRegPlayCircle } from "react-icons/fa";
-import { MdPauseCircleOutline, MdPlayCircleOutline } from "react-icons/md";
 import { ImPause, ImPlay2 } from "react-icons/im";
-import { GiNextButton, GiPreviousButton } from "react-icons/gi";
-import {
-  TbArrowsShuffle,
-  TbPlayerSkipBack,
-  TbPlayerSkipForward,
-} from "react-icons/tb";
+import { TbArrowsShuffle } from "react-icons/tb";
 import { BsSkipEndFill, BsSkipStartFill } from "react-icons/bs";
 import { RxSpeakerLoud, RxSpeakerOff } from "react-icons/rx";
 import { RiRepeat2Fill, RiRepeatOneFill } from "react-icons/ri";
 import PlayProvider from "./PlayProvider";
 import "../css/PlayContent.css";
 import "../css/PlayProvider.css";
-import { list } from "../MusicList/List.js";
 import { useDispatch, useSelector } from "react-redux";
 import {
   nextAudio,
@@ -22,9 +14,7 @@ import {
   randomAudio,
   repeatAudio,
 } from "../redux/action/action.js";
-import { playerAction } from "../redux/action/action.js";
 import TimeSlider from "react-input-slider";
-import playIcon from "../icons/play-button.svg";
 
 function PlayContent() {
   const storageIndex = JSON.parse(localStorage.getItem("index"));
@@ -39,9 +29,6 @@ function PlayContent() {
   const [currentMinute, setCurrentMinute] = useState(0);
   const [currentSecond, setCurrentSecond] = useState(0);
   const [volume, setVolume] = useState(1);
-  // const [player, setPlayer] = useState(list[0]);
-  // const [index, setIndex] = useState(storageIndex);
-  // const [musicList, setMusicList] = useState(storageList);
 
   const maxVolume = 1;
 
@@ -54,21 +41,6 @@ function PlayContent() {
   const musicList = useSelector((state) => state.list.audioList);
   // const jsonList = JSON.stringify(musicList);
   // localStorage.setItem("music-list", jsonList);
-
-  // const updateState = () => {
-  //   setIndex(() => {
-  //     const index = useSelector((state) => state.player.index);
-  //     console.log(index);
-  //     const jsonIndex = JSON.stringify(index);
-  //     localStorage.setItem("index", jsonIndex);
-  //   });
-
-  //   setMusicList(() => {
-  //     const musicList = useSelector((state) => state.list.audioList);
-  //     const jsonList = JSON.stringify(musicList);
-  //     localStorage.setItem("music-list", jsonList);
-  //   });
-  // };
 
   const dispatch = useDispatch();
 
@@ -147,10 +119,6 @@ function PlayContent() {
     }
   }, [currentTime]);
 
-  // useEffect(() => {
-  //   updateState();
-  // }, [musicList, index]);
-
   return (
     <PlayProvider>
       <div className="header">
@@ -164,11 +132,11 @@ function PlayContent() {
         <div className="btn-controls">
           <div className="btn-loop" onClick={toggleLoop}>
             {isLoop % 3 == 0 ? (
-              <RiRepeat2Fill size={22} />
+              <RiRepeat2Fill size={24} />
             ) : isLoop % 3 == 1 ? (
-              <RiRepeat2Fill size={22} color="purple" />
+              <RiRepeat2Fill size={24} color="purple" />
             ) : (
-              <RiRepeatOneFill size={22} color="purple" />
+              <RiRepeatOneFill size={24} color="purple" />
             )}
           </div>
           <div className="btn-previous" onClick={handlePrevious}>

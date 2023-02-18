@@ -72,6 +72,12 @@
   padding: var(--size2);
 }
 
+.btn-next:active,
+.btn-previous:active {
+  padding: var(--size2);
+  color: #800757;
+}
+
 .btn-loop,
 .btn-shuffle {
   padding: var(--size2);

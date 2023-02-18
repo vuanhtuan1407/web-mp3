@@ -1,7 +1,3 @@
-import DraggableList from "react-draggable-list";
-import dragula from "react-dragula";
-import React, { useEffect, useState } from "react";
-
 export const list = [
   {
     id: 0,
