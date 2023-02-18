@@ -8,7 +8,8 @@ export const list = [
     name: "Into the night",
     artist: "YOASOBI",
     image:
-      "https://cdn-japanlengths.com/wp-content/uploads/2021/08/np_file_105988-870x489.jpeg",
+      // "https://cdn-japanlengths.com/wp-content/uploads/2021/08/np_file_105988-870x489.jpeg",
+      "https://images.genius.com/a8124b2c6e6245702850c18fc787c4cb.1000x1000x1.jpg",
     url: "https://drive.google.com/uc?export=view&id=1AgGUBxx1USLSU8o7JCGQheYGoHwFD6fm",
     type: ["EDM"],
     length: "04:35",

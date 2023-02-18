@@ -9,12 +9,12 @@
 } */
 
 .music-provider {
-    position: relative;
-    left: 50%;
-    width: 50%;
-    height: 70%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
