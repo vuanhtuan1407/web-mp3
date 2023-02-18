@@ -7,7 +7,7 @@ import "../css/MusicList.css";
 import "../css/MusicProvider.css";
 import { store } from "../redux/store/store.js";
 import {} from "react-icons";
-import { BsFillPlayFill } from "react-icons/bs";
+import { BsFillPlayFill, BsList } from "react-icons/bs";
 
 function MusicList() {
   const storageList = JSON.parse(localStorage.getItem("music-list"));
@@ -57,13 +57,18 @@ function MusicList() {
             console.log({ index, musicList });
           }}
         >
+          <BsList color="white" size={20} />
           <img className="music-img" src={music.image} />
           <div className="music-title">
             <div>{music.name}</div>
             <div>{music.artist}</div>
             <div className="tags">
               {music.type.map((type) => (
-                <a href="#">{type}</a>
+                <div className="tag">
+                  <a href="#">
+                    {type}
+                  </a>
+                </div>
               ))}
             </div>
           </div>
