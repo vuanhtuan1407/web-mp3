@@ -108,16 +108,20 @@ function PlayContent() {
   };
 
   const handleOnEnded = () => {
-    if (isLoop == 2) handleRepeat();
-    else handleNext();
-  };
-
-  useEffect(() => {
-    if (isLoop % 3 == 0 && currentTime == duration) {
+    if (isLoop % 3 == 2) handleRepeat();
+    else if (isLoop % 3 == 0) {
+      handleNext();
       audio.current.pause();
       setIsPlay(false);
-    }
-  }, [currentTime]);
+    } else handleNext();
+  };
+
+  // useEffect(() => {
+  //   if (isLoop % 3 == 0 && currentTime == duration) {
+  //     audio.current.pause();
+  //     setIsPlay(false);
+  //   }
+  // }, [currentTime]);
 
   return (
     <PlayProvider>
