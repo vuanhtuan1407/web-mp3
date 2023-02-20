@@ -17,9 +17,6 @@ import {
 import TimeSlider from "react-input-slider";
 
 function PlayContent() {
-  const storageIndex = JSON.parse(localStorage.getItem("index"));
-  const storageList = JSON.parse(localStorage.getItem("music-list"));
-
   const [isPlay, setIsPlay] = useState(false);
   const [isLoop, setIsLoop] = useState(0);
   const [isShuffle, setIsShuffle] = useState(false);
@@ -34,13 +31,7 @@ function PlayContent() {
 
   const audio = useRef();
   const index = useSelector((state) => state.player.index);
-  console.log(index);
-  // const jsonIndex = JSON.stringify(index);
-  // localStorage.setItem("index", jsonIndex);
-
   const musicList = useSelector((state) => state.list.audioList);
-  // const jsonList = JSON.stringify(musicList);
-  // localStorage.setItem("music-list", jsonList);
 
   const dispatch = useDispatch();
 
@@ -83,7 +74,7 @@ function PlayContent() {
   };
 
   const handleVolume = ({ y }) => {
-    audio.current.volume = y;
+    audio.current.volume = y || 0.7;
     console.log(audio.current.volume);
     setVolume(y);
     if (y == 0) setIsMute(true);

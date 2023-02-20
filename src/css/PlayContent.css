@@ -27,25 +27,6 @@
   align-items: center;
 }
 
-/* .controls {
-  /* color: black; 
-  position: fixed;
-  bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(77, 9, 83);
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
-}
-
-.btn-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
-
 .controls {
   /* color: black;  */
   display: flex;
@@ -95,15 +76,18 @@
 }
 
 .volume-slider {
-  position: relative;
+  /* position: relative;
   padding: 25px;
   top: 45px;
-  right: 0px;
+  right: 0px; */
   display: none;
 }
 
 .btn-volume:hover .volume-slider {
   position: absolute;
+  padding: 25px;
+  top: 45px;
+  right: 0px;
   display: flex;
 }
 
